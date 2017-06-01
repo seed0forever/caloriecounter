@@ -29,4 +29,9 @@ dependencies {
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	// https://mvnrepository.com/artifact/org.webjars/bootstrap
+	compile group: 'org.webjars', name: 'bootstrap', version: '3.3.7-1'
+	// https://mvnrepository.com/artifact/org.webjars.bower/jquery
+	compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
 }
