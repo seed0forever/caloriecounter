@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!--/* The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags */-->
+
+  <title>Add or Edit - Calorie Counter</title>
+
+  <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel="stylesheet"
+        th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<div class="container-fluid">
+  <h1>Add or Edit - Calorie Counter</h1>
+
+  <p>
+    <a class="btn btn-warning" th:href="@{/}">Back to Main Page</a>
+  </p>
+
+
+  <!--/*@thymesVar id="meal" type="com.greenfox.seed0forever.caloriecounter.model.Meal"*/-->
+  <form class="form-horizontal" action="#" th:action="@{/add}" th:object="${meal}" method="post"
+        role="form">
+
+    <div class="form-group"> <!-- Meal date field -->
+      <label class="control-label requiredField" for="meal-date">Date<span
+          class="asteriskField">*</span></label>
+      <input class="form-control" id="meal-date" type="date" th:field="*{date}"/>
+    </div>
+
+    <div class="form-group"> <!-- Meal type field -->
+      <label class="control-label requiredField" for="meal-type">Type<span
+          class="asteriskField">*</span></label>
+      <select class="form-control" id="meal-type" th:field="*{type}">
+        <!--/*@thymesVar id="mealTypes" type="java.util.ArrayList<String>"*/-->
+        <option th:each="typeElement : ${mealTypes}" th:value="${typeElement}"
+                th:text="${typeElement}">Breakfast
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group"> <!-- Description field -->
+      <label class="control-label " for="meal-description">Description</label>
+      <textarea class="form-control" id="meal-description" rows="10" cols="50"
+                th:field="*{description}"/>
+    </div>
+
+    <div class="form-group"> <!-- Calories field -->
+      <label class="control-label requiredField" for="meal-calories">Calories<span
+          class="asteriskField">*</span></label>
+      <input type="number" class="form-control" id="meal-calories" th:field="*{calories}"/>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary " name="submit" type="submit">Save meal</button>
+    </div>
+
+  </form>
+
+</div>
+
+<!--/* jQuery (necessary for Bootstrap's JavaScript plugins) */-->
+<script src="/webjars/jquery/1.11.1/jquery.min.js"
+        th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<!--/* Include all compiled plugins (below), or include individual files as needed */-->
+<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</body>
+</html>
