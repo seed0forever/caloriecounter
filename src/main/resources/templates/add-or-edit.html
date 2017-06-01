@@ -39,14 +39,16 @@
     </div>
 
     <div class="form-group"> <!-- Meal type field -->
-      <label class="control-label requiredField" for="meal-type">Type<span
-          class="asteriskField">*</span></label>
+      <label class="control-label requiredField" for="meal-type">Type
+        <span class="asteriskField">*</span></label>
+
       <select class="form-control" id="meal-type" th:field="*{type}">
         <!--/*@thymesVar id="mealTypes" type="java.util.ArrayList<String>"*/-->
         <option th:each="typeElement : ${mealTypes}" th:value="${typeElement}"
                 th:text="${typeElement}">Breakfast
         </option>
       </select>
+
     </div>
 
     <div class="form-group"> <!-- Description field -->
