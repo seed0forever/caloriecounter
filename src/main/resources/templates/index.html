@@ -47,11 +47,12 @@
         <th>calories</th>
         <th>functions</th>
       </tr>
-      <tr>
-        <td>2017.01.01</td>
-        <td>Breakfast</td>
-        <td>What kind of description here?</td>
-        <td>400</td>
+      <!--/*@thymesVar id="allMeals" type="java.util.List<com.greenfox.seed0forever.caloriecounter.model.Meal>"*/-->
+      <tr th:each="meal : ${allMeals}">
+        <td th:text="${meal.date}">2017.01.01</td>
+        <td th:text="${meal.type}">Breakfast</td>
+        <td th:text="${meal.description}">What kind of description here?</td>
+        <td th:text="${meal.calories}">400</td>
         <td>Edit, Delete</td>
       </tr>
     </table>

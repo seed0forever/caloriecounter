@@ -26,4 +26,7 @@ public class MealService {
     mealRepository.save(meal);
   }
 
+  public List<Meal> listAllMeals() {
+    return mealRepository.findAll();
+  }
 }
