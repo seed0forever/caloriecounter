@@ -26,7 +26,7 @@ public class MainController {
     List<Meal> allMeals = mealService.listAllMeals();
 
     model.addAttribute("allMeals", allMeals);
-    model.addAttribute("totalCalories", mealService.calculateTotalCalories(allMeals));
+    model.addAttribute("mealStats", mealService.calculateMealStats(allMeals));
     return "index";
   }
 

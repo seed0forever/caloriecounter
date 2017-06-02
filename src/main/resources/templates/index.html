@@ -23,15 +23,17 @@
 <div class="container-fluid">
   <h1>Calorie Counter</h1>
 
-  <!--/*@thymesVar id="allMeals" type="java.util.List<com.greenfox.seed0forever.caloriecounter.model.Meal>"*/-->
 
   <div class="table-responsive">
     <table class="table table-striped table-hover table-condensed">
       <tr>
-        <td>Number of meals:</td>
-        <td th:text="${#lists.size(allMeals)}">15</td>
-        <td>Total calories:</td>
-        <td th:text="${totalCalories}">5000</td>
+        <!--/*@thymesVar id="mealStats" type="com.greenfox.seed0forever.caloriecounter.model.rest.MealStatsRestMessage"*/-->
+        <th:block th:object="${mealStats}">
+          <td>Number of meals:</td>
+          <td th:text="*{numberOfMeals}">15</td>
+          <td>Total calories:</td>
+          <td th:text="*{totalCalories}">5000</td>
+        </th:block>
       </tr>
     </table>
   </div>
@@ -49,6 +51,7 @@
         <th>calories</th>
         <th>functions</th>
       </tr>
+      <!--/*@thymesVar id="allMeals" type="java.util.List<com.greenfox.seed0forever.caloriecounter.model.Meal>"*/-->
       <tr th:each="meal : ${allMeals}">
         <td th:text="${meal.date}">2017.01.01</td>
         <td th:text="${meal.type}">Breakfast</td>

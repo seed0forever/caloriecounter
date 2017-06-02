@@ -1,6 +1,8 @@
 package com.greenfox.seed0forever.caloriecounter.service;
 
 import com.greenfox.seed0forever.caloriecounter.model.Meal;
+import com.greenfox.seed0forever.caloriecounter.model.rest.MealStatsRestMessage;
+import com.greenfox.seed0forever.caloriecounter.model.rest.RestMessage;
 import com.greenfox.seed0forever.caloriecounter.repository.MealRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,11 +20,14 @@ public class MealService {
   public static final String ERROR_ID_NOT_EXISTS = "cannot update: received ID does not exist in database";
 
   private final MealRepository mealRepository;
+  private final MealStatsRestMessage mealStats;
 
   @Autowired
   public MealService(
-          MealRepository mealRepository) {
+          MealRepository mealRepository,
+          MealStatsRestMessage mealStats) {
     this.mealRepository = mealRepository;
+    this.mealStats = mealStats;
   }
 
   public List<Meal> listAllMeals() {
@@ -34,6 +39,17 @@ public class MealService {
       return false;
     }
     return mealRepository.exists(meal.getId());
+  }
+
+  public RestMessage calculateMealStats() {
+    List<Meal> allMeals = listAllMeals();
+    return calculateMealStats(allMeals);
+  }
+
+  public RestMessage calculateMealStats(List<Meal> allMeals) {
+    mealStats.setNumberOfMeals(allMeals.size());
+    mealStats.setTotalCalories(calculateTotalCalories(allMeals));
+    return mealStats;
   }
 
   public long calculateTotalCalories() {

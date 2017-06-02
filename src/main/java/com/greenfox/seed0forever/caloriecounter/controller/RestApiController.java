@@ -6,9 +6,7 @@ import com.greenfox.seed0forever.caloriecounter.model.rest.RestMessage;
 import com.greenfox.seed0forever.caloriecounter.model.rest.StatusOkRestMessage;
 import com.greenfox.seed0forever.caloriecounter.service.MealService;
 import com.greenfox.seed0forever.caloriecounter.service.ValidationResponseService;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +46,8 @@ public class RestApiController {
   }
 
   @GetMapping(value = "/getstats", produces = "application/json")
-  public Map<String, Long> respondWithMealStats() {
-    Map<String, Long> mealStats = new HashMap<>();
-    List<Meal> allMeals = mealService.listAllMeals();
-
-    mealStats.put("number of meals", (long) allMeals.size());
-    mealStats.put("total calories", mealService.calculateTotalCalories(allMeals));
-
-    return mealStats;
+  public RestMessage respondWithMealStats() {
+    return mealService.calculateMealStats();
   }
 
   @PostMapping(value = "/meal")
@@ -71,7 +63,6 @@ public class RestApiController {
     }
 
     mealService.saveAsNewEntity(meal);
-
     return ResponseEntity.ok().body(okMessage);
   }
 
@@ -95,7 +86,6 @@ public class RestApiController {
     }
 
     mealService.save(meal);
-
     return ResponseEntity.ok().body(okMessage);
   }
 
