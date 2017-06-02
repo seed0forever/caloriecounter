@@ -45,4 +45,20 @@ public class MealService {
 
     return totalCalories;
   }
+
+  public long calculateTotalCalories(List<Meal> allMeals) {
+    if (allMeals == null || allMeals.size() == 0) {
+      return 0L;
+    }
+
+    long sumCalories = 0L;
+    for (Meal meal : allMeals) {
+      long calories =
+              (meal.getCalories() != null)
+                      ? meal.getCalories().longValue()
+                      : 0L;
+      sumCalories += calories;
+    }
+    return sumCalories;
+  }
 }
