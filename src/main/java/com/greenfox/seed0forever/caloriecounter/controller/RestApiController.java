@@ -49,7 +49,6 @@ public class RestApiController {
 
     if (bindingResult.hasErrors()) {
       responseMessage.put("status", "error");
-
       String errorMessage = "validation error with field(s): ";
 
       for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -61,7 +60,7 @@ public class RestApiController {
       return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
     }
 
-    mealService.save(meal);
+    mealService.saveAsNewEntity(meal);
     responseMessage.put("status", "ok");
     return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
   }

@@ -51,4 +51,15 @@ public class MealService {
     }
     return sumCalories;
   }
+
+  public void saveAsNewEntity(Meal meal) {
+    Meal mealToSave = new Meal();
+
+    mealToSave.setDate(meal.getDate());
+    mealToSave.setType(meal.getType());
+    mealToSave.setDescription(meal.getDescription());
+    mealToSave.setCalories(meal.getCalories());
+
+    mealRepository.save(mealToSave);
+  }
 }
