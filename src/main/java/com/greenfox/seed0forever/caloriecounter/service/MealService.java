@@ -18,7 +18,8 @@ public class MealService {
   private final MealRepository mealRepository;
 
   @Autowired
-  public MealService(MealRepository mealRepository) {
+  public MealService(
+          MealRepository mealRepository) {
     this.mealRepository = mealRepository;
   }
 
@@ -28,5 +29,20 @@ public class MealService {
 
   public List<Meal> listAllMeals() {
     return mealRepository.findAll();
+  }
+
+  private long calculateTotalCalories() {
+    List<Meal> allMeals = mealRepository.findAll();
+    long totalCalories = 0L;
+
+    for (Meal meal : allMeals) {
+      long calories =
+              (meal.getCalories() != null)
+                      ? meal.getCalories().longValue()
+                      : 0L;
+      totalCalories += calories;
+    }
+
+    return totalCalories;
   }
 }

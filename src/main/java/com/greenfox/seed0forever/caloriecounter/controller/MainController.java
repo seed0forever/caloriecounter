@@ -2,6 +2,7 @@ package com.greenfox.seed0forever.caloriecounter.controller;
 
 import com.greenfox.seed0forever.caloriecounter.model.Meal;
 import com.greenfox.seed0forever.caloriecounter.service.MealService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,16 @@ public class MainController {
 
   @GetMapping("/")
   public String showMainPage(Model model) {
-    model.addAttribute("allMeals", mealService.listAllMeals());
+    List<Meal> allMeals = mealService.listAllMeals();
+
+    model.addAttribute("allMeals", allMeals);
+    model.addAttribute("totalCalories", calculateTotalCalories(allMeals));
     return "index";
+  }
+
+  private long calculateTotalCalories(List<Meal> allMeals) {
+    long sumCalories = allMeals.stream().mapToLong(meal -> meal.getCalories().longValue()).sum();
+    return sumCalories;
   }
 
   @GetMapping("/add")
