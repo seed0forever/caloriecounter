@@ -31,19 +31,9 @@ public class MealService {
     return mealRepository.findAll();
   }
 
-  private long calculateTotalCalories() {
+  public long calculateTotalCalories() {
     List<Meal> allMeals = mealRepository.findAll();
-    long totalCalories = 0L;
-
-    for (Meal meal : allMeals) {
-      long calories =
-              (meal.getCalories() != null)
-                      ? meal.getCalories().longValue()
-                      : 0L;
-      totalCalories += calories;
-    }
-
-    return totalCalories;
+    return calculateTotalCalories(allMeals);
   }
 
   public long calculateTotalCalories(List<Meal> allMeals) {
