@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,6 +65,22 @@ public class RestApiController {
     }
 
     mealService.saveAsNewEntity(meal);
+    return new ResponseEntity<>(okMessage, HttpStatus.OK);
+  }
+
+  @PutMapping(value = "/meal")
+  public ResponseEntity<RestMessage> updateExistingMeal(
+          @Valid @RequestBody Meal meal,
+          BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      RestMessage errorMessage =
+              validationService.createErrorMessage(bindingResult);
+
+      return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    mealService.save(meal);
     return new ResponseEntity<>(okMessage, HttpStatus.OK);
   }
 
