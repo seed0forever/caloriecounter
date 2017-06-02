@@ -15,6 +15,8 @@ public class MealService {
           new ArrayList<>(Arrays.asList(
                   "Breakfast", "Elevenses", "Lunch", "Snack", "Dinner", "Midnight Snack"));
 
+  public static final String ERROR_ID_NOT_EXISTS = "cannot update: received ID does not exist in database";
+
   private final MealRepository mealRepository;
 
   @Autowired
@@ -23,12 +25,15 @@ public class MealService {
     this.mealRepository = mealRepository;
   }
 
-  public void save(Meal meal) {
-    mealRepository.save(meal);
-  }
-
   public List<Meal> listAllMeals() {
     return mealRepository.findAll();
+  }
+
+  public boolean existsById(Meal meal) {
+    if (meal == null) {
+      return false;
+    }
+    return mealRepository.exists(meal.getId());
   }
 
   public long calculateTotalCalories() {
@@ -52,6 +57,10 @@ public class MealService {
     return sumCalories;
   }
 
+  public void save(Meal meal) {
+    mealRepository.save(meal);
+  }
+
   public void saveAsNewEntity(Meal meal) {
     Meal mealToSave = new Meal();
 
@@ -62,4 +71,5 @@ public class MealService {
 
     mealRepository.save(mealToSave);
   }
+
 }

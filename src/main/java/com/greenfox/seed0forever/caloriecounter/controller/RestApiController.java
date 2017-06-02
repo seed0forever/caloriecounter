@@ -1,6 +1,7 @@
 package com.greenfox.seed0forever.caloriecounter.controller;
 
 import com.greenfox.seed0forever.caloriecounter.model.Meal;
+import com.greenfox.seed0forever.caloriecounter.model.rest.ErrorRestMessage;
 import com.greenfox.seed0forever.caloriecounter.model.rest.RestMessage;
 import com.greenfox.seed0forever.caloriecounter.model.rest.StatusOkRestMessage;
 import com.greenfox.seed0forever.caloriecounter.service.MealService;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +23,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiController {
 
   private final MealService mealService;
-  private final StatusOkRestMessage okMessage;
   private final ValidationResponseService validationService;
+
+  private final ErrorRestMessage errorMessage;
+  private final StatusOkRestMessage okMessage;
 
   @Autowired
   public RestApiController(
           MealService mealService,
-          StatusOkRestMessage okMessage,
-          ValidationResponseService validationService) {
+          ValidationResponseService validationService,
+          ErrorRestMessage errorMessage,
+          StatusOkRestMessage okMessage) {
+
     this.mealService = mealService;
-    this.okMessage = okMessage;
     this.validationService = validationService;
+
+    this.errorMessage = errorMessage;
+    this.okMessage = okMessage;
   }
 
   @GetMapping(value = "/getmeals", produces = "application/json")
@@ -58,14 +64,15 @@ public class RestApiController {
           BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
-      RestMessage errorMessage =
-              validationService.createErrorMessage(bindingResult);
+      errorMessage.setMessage(
+              validationService.createFieldErrorsMessage(bindingResult));
 
-      return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+      return ResponseEntity.badRequest().body(errorMessage);
     }
 
     mealService.saveAsNewEntity(meal);
-    return new ResponseEntity<>(okMessage, HttpStatus.OK);
+
+    return ResponseEntity.ok().body(okMessage);
   }
 
   @PutMapping(value = "/meal")
@@ -74,14 +81,22 @@ public class RestApiController {
           BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
-      RestMessage errorMessage =
-              validationService.createErrorMessage(bindingResult);
+      errorMessage.setMessage(
+              validationService.createFieldErrorsMessage(bindingResult));
 
-      return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+      return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+    if (!mealService.existsById(meal)) {
+      errorMessage.setMessage(
+              MealService.ERROR_ID_NOT_EXISTS);
+
+      return ResponseEntity.badRequest().body(errorMessage);
     }
 
     mealService.save(meal);
-    return new ResponseEntity<>(okMessage, HttpStatus.OK);
+
+    return ResponseEntity.ok().body(okMessage);
   }
 
 }

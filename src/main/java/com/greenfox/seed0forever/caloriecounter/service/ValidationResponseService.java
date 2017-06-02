@@ -20,11 +20,6 @@ public class ValidationResponseService {
     this.errorMessage = errorMessage;
   }
 
-  public ErrorRestMessage createErrorMessage(BindingResult bindingResult) {
-    errorMessage.setMessage(createFieldErrorsMessage(bindingResult));
-    return errorMessage;
-  }
-
   public String createFieldErrorsMessage(BindingResult bindingResult) {
     String errorMessage = FIELD_ERRORS_MESSAGE_BEGINNING;
 
