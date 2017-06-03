@@ -1,9 +1,9 @@
 package com.greenfox.seed0forever.caloriecounter.controller;
 
 import com.greenfox.seed0forever.caloriecounter.model.Meal;
-import com.greenfox.seed0forever.caloriecounter.model.rest.ErrorRestMessage;
 import com.greenfox.seed0forever.caloriecounter.model.rest.RestMessage;
-import com.greenfox.seed0forever.caloriecounter.model.rest.StatusOkRestMessage;
+import com.greenfox.seed0forever.caloriecounter.model.rest.status.ErrorRestMessage;
+import com.greenfox.seed0forever.caloriecounter.model.rest.status.StatusOkRestMessage;
 import com.greenfox.seed0forever.caloriecounter.service.MealService;
 import com.greenfox.seed0forever.caloriecounter.service.ValidationResponseService;
 import java.util.List;

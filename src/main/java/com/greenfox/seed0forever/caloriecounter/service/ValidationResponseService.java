@@ -1,6 +1,6 @@
 package com.greenfox.seed0forever.caloriecounter.service;
 
-import com.greenfox.seed0forever.caloriecounter.model.rest.ErrorRestMessage;
+import com.greenfox.seed0forever.caloriecounter.model.rest.status.ErrorRestMessage;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

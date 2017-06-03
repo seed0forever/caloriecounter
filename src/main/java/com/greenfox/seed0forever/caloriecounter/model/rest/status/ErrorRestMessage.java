@@ -1,5 +1,6 @@
-package com.greenfox.seed0forever.caloriecounter.model.rest;
+package com.greenfox.seed0forever.caloriecounter.model.rest.status;
 
+import com.greenfox.seed0forever.caloriecounter.model.rest.RestMessage;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
