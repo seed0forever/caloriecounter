@@ -13,6 +13,9 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -38,7 +41,11 @@ public class RestApiControllerTest {
   @Autowired
   private WebApplicationContext webApplicationContext;
 
+  @Mock
   private MealService mealService;
+
+  @InjectMocks
+  private RestApiController restApiController;
 
   @Autowired
   void setConverters(HttpMessageConverter<?>[] converters) {
@@ -55,6 +62,7 @@ public class RestApiControllerTest {
   @Before
   public void setUp() throws Exception {
     this.mockMvc = webAppContextSetup(webApplicationContext).build();
+    MockitoAnnotations.initMocks(this);
   }
 
   @Test
