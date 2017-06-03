@@ -1,5 +1,6 @@
 package com.greenfox.seed0forever.caloriecounter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @Data
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Meal {
 
   @Id
